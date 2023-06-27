@@ -55,9 +55,17 @@ public class Main {
         Map<ConnectionCategory, Long> groupCategory = connectionManager.groupByCategory();
         groupCategory.forEach(((category, countOfConnections) -> System.out.println(category + ": " + countOfConnections) ));
 
-
         System.out.println("\n\n****************************************");
         Map<Gender, Long> groupGender = connectionManager.groupByGender();
         groupGender.forEach(((gender, countOfConnections) -> System.out.println(gender + ": " + countOfConnections) ));
+
+        System.out.println("\n\n****************************************");
+        connectionManager.call(connection1.getPhoneNumber());
+
+        System.out.println("\n\n****************************************");
+        connectionManager.sendMessage("5241534178", "Merhaba, nasılsın?");
+        connectionManager.sendMessage("5241534178", "Merhaba, ben de iyiyim");
+        connectionManager.sendMessage("5241534178", "Merhaba, yine ben");
+        connectionManager.sendMessage("5241534178", "Merhaba, yine mi ben?");
     }
 }

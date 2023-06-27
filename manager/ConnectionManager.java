@@ -4,19 +4,21 @@ import enums.ConnectionCategory;
 import enums.Gender;
 import person.Connection;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ConnectionManager extends A_ConnectionManager {
     Scanner scanner = new Scanner(System.in);
+    private Map<String, List<String>> sentMessages;
+    private Map<String, List<String>> receivedMessages;
 
-
+    public ConnectionManager(){
+        sentMessages = new HashMap<>();
+    }
     public void list() {
         connections.values().forEach(System.out::println);
     }
-
     public void updateOnlyNameAndSurname(Connection connection) {
         System.out.print("Name: ");
         String name = scanner.next();
@@ -29,7 +31,6 @@ public class ConnectionManager extends A_ConnectionManager {
             updatedConnection.setSurName(surName);
         });
     }
-
     public void updateOnlyPhoneNumber(Connection connection) {
         System.out.print("Phone number: ");
         String phoneNumber = scanner.next();
@@ -38,7 +39,6 @@ public class ConnectionManager extends A_ConnectionManager {
                 connection1.setPhoneNumber(phoneNumber)
         );
     }
-
     public void updateOnlyEmailAddress(Connection connection) {
         System.out.print("Email address: ");
         String emailAddress = scanner.next();
@@ -46,40 +46,42 @@ public class ConnectionManager extends A_ConnectionManager {
         update(connection.getPhoneNumber(), connection1 ->
                 connection1.setEmailAddress(emailAddress));
     }
-
     public void updateAll(Connection connection) {
         updateOnlyNameAndSurname(connection);
         updateOnlyEmailAddress(connection);
         updateOnlyPhoneNumber(connection);
     }
-
-
-    /*private Map<String, Connection> filterMap(Predicate<Connection> connectionPredicate){
-
-        return connections.values().stream().collect(Collectors.groupingBy(Connection::getPhoneNumber, connections.values().stream().filter(connectionPredicate)));
-    }*/
-
     public List<Connection> filterByGender(String specifiedGender) {
         return filterConnection(connection -> connection.getGender().name().equalsIgnoreCase(specifiedGender));
     }
-
     @Override
     public List<Connection> filterByCategory(String specifiedCategory) {
         return filterConnection(connection -> connection.getCategory().name().equalsIgnoreCase(specifiedCategory));
     }
-
     @Override
     public List<Connection> sortByName(int length) {
         return null;
     }
+    public void sendMessage(String phoneNumber, String message) {
+        Connection connection = connections.get(phoneNumber);
 
-    public void sendMessage(String phoneNumber) {
+        LocalDate date = LocalDate.now();
+        message = date + ": " + message;
 
+        if(!sentMessages.containsKey(phoneNumber)){
+            sentMessages.put(phoneNumber, new ArrayList<>());
+        }
+        List<String> messages = sentMessages.get(phoneNumber);
+        messages.add(message);
+        sentMessages.put(phoneNumber, messages);
+
+        sentMessages.values().forEach(System.out::println);
+        // connection.received
     }
 
     @Override
     public void call(String phoneNumber) {
-
+        getConnect(phoneNumber, connection->System.out.println(connections.get(phoneNumber).getName() + " " + connections.get(phoneNumber).getSurname() + " calling..."));
     }
 
     @Override

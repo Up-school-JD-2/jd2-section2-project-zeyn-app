@@ -2,13 +2,8 @@ package person;
 
 import enums.ConnectionCategory;
 import idGenerator.IdGenerator;
-import java.util.List;
-import java.util.Map;
-
 public class Connection extends Person{
     private ConnectionCategory category;
-    public Map<String, List<String>> sentMessages;
-    public Map<String, List<String>> receivedMessages;
     private IdGenerator idGenerator = new IdGenerator();
 
     public ConnectionCategory getCategory() {

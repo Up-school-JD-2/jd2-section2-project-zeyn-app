@@ -44,6 +44,6 @@ public abstract class A_ConnectionManager implements I_Manager<Connection>, Func
     public abstract List<Connection> filterByGender(String specifiedGender);
     public abstract List<Connection> filterByCategory(String specifiedCategory);
     public abstract List<Connection> sortByName(int length);
-    public abstract void sendMessage(String phoneNumber);
+    public abstract void sendMessage(String phoneNumber, String message);
     public abstract void call(String phoneNumber);
 }
