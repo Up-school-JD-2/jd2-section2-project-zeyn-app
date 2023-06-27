@@ -1,6 +1,7 @@
 package person;
 
 import enums.Gender;
+import idGenerator.IdGenerator;
 
 public abstract class Person {
     protected String id;
@@ -9,7 +10,11 @@ public abstract class Person {
     protected String phoneNumber;
     protected String emailAddress;
     protected Gender gender;
+
+    private IdGenerator idGenerator = new IdGenerator();
+
     public Person() {
+        id = idGenerator.generateID("family");
     }
 
     public String getId() {
@@ -59,15 +64,10 @@ public abstract class Person {
     public Gender getGender() {
         return gender;
     }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     @Override
     public String toString() {
         return "Person{" +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", gender='" + gender + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

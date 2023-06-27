@@ -2,10 +2,10 @@ package manager;
 
 import java.util.function.Consumer;
 
-public interface Manager<T> {
+public interface I_Manager<T> {
     T add(T t);
-    boolean remove(T t);
+    T remove(T t);
     //T remove(int index);
-    void update(String str, Consumer<T> t);
+    void update(String item, Consumer<T> t);
 }
 
