@@ -1,4 +1,4 @@
-package manager;
+package interfaces;
 
 import enums.ConnectionCategory;
 import enums.Gender;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public interface FunctionalInterface {
+public interface I_FunctionalInterface {
     List<Connection> filterConnection(Predicate<Connection> filteredCondition);
     void getConnect(String phoneNumber, Consumer<String> connectType);
     Map<ConnectionCategory, Long> groupByCategory();

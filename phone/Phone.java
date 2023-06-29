@@ -1,5 +1,6 @@
 package phone;
 
+import idGenerator.IdGenerator;
 import person.User;
 import enums.OperatingSystem;
 
@@ -12,22 +13,25 @@ public class Phone {
     private double emptySpace;
     private OperatingSystem operatingSystem;
     private User owner;
+    private IdGenerator idGenerator = IdGenerator.getIdGenerator();
 
     public Phone() {
         occupancySpace = 0;
         emptySpace = storageSpace;
     }
 
-    public Phone(String brand, String model, String serialNumber, double storageSpace, OperatingSystem operatingSystem, User owner) {
+    public Phone(String brand, String model, double storageSpace, OperatingSystem operatingSystem, User owner) {
         this.brand = brand;
         this.model = model;
-        this.serialNumber = serialNumber;
         this.storageSpace = storageSpace;
         this.operatingSystem = operatingSystem;
         this.owner = owner;
         owner.setPhone(this);
+        this.serialNumber = idGenerator.generateID("serialNumber");
     }
-
+    public String getSerialNumber() {
+        return serialNumber;
+    }
     public double getStorageSpace() {
         return storageSpace;
     }

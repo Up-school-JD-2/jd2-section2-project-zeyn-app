@@ -1,4 +1,4 @@
-package manager;
+package interfaces;
 
 import java.util.function.Consumer;
 

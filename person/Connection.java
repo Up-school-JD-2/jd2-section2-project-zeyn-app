@@ -4,7 +4,7 @@ import enums.ConnectionCategory;
 import idGenerator.IdGenerator;
 public class Connection extends Person{
     private ConnectionCategory category;
-    private IdGenerator idGenerator = new IdGenerator();
+    private IdGenerator idGenerator = IdGenerator.getIdGenerator();
 
     public ConnectionCategory getCategory() {
         return category;

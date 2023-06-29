@@ -1,49 +1,45 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-/*
+package manager;
 
-public class ApplicationManager implements Manager.Manager<Application>{
-    Phone.Phone phone = new Phone.Phone();
-  //  List<Application> apps;
-    public ApplicationManager(Phone.Phone phone){
-        this.phone = phone;
-      //  apps = phone.getApps();
+import application.Application;
+import interfaces.I_Manager;
+import phone.Phone;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
+public class ApplicationManager implements I_Manager<Application> {
+    Phone phone = new Phone();
+    Map<String, Application> apps;
+    public ApplicationManager(/*Phone phone*/) {
+        //this.phone = phone;
+        apps = new HashMap<>();
     }
-
-    private boolean hasEnoughSpace(Application application){
-        if(phone.getEmptySpace()>application.getSize()) return true;
-        return false;
+    public void list(){
+        apps.values().forEach(System.out::println);
     }
-
+    private String createAppKey(Application application){
+        return application.getName() + application.getVersion();
+    }
+    private boolean hasEnoughSpace(Application application) {
+        return phone.getEmptySpace() > application.getSize();
+    }
     @Override
-    public boolean add(Application application) {
-        if(hasEnoughSpace(application))
-        {
-            //apps.add(application);
-            phone.setOccupancySpace(application.getSize());
-        }
-        return false;
+    public Application add(Application application) {
+        return apps.put(createAppKey(application), application);
     }
-
     @Override
-    public boolean remove(Application application) {
-        return apps.remove(application);
+    public Application remove(Application application) {
+        return apps.remove(createAppKey(application));
     }
-
     @Override
-    public Application remove(int index) {
-        return apps.remove(index);
+    public void update(String applicationName, Consumer<Application> consumer) {
+        consumer.accept(apps.get(applicationName));
     }
-
-    @Override
-    public Application update(Application application) {
-
-        return null;
-    }
-    // Phone.Phone-Application(list) map
     // addPerson() if user is owner switch the users and their files, generate file name using Supplier functions
-
+    public void updateName(Application application, String name){
+        update(application.getName(), application_ -> application_.setName(name));
+    }
 
 }
-*/
+

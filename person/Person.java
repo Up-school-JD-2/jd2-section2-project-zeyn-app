@@ -11,7 +11,7 @@ public abstract class Person {
     protected String emailAddress;
     protected Gender gender;
 
-    private IdGenerator idGenerator = new IdGenerator();
+    private IdGenerator idGenerator = IdGenerator.getIdGenerator();
 
     public Person() {
         id = idGenerator.generateID("family");
