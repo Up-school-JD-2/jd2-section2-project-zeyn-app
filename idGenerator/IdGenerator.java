@@ -1,7 +1,8 @@
 package idGenerator;
 
-import enums.ConnectionCategory;
-import enums.OperatingSystem;
+import application.ApplicationCategory;
+import connection.ConnectionCategory;
+import phone.OperatingSystem;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -42,7 +43,10 @@ public class IdGenerator {
         registerIDSupplier("android", () -> OperatingSystem.ANDROID + "-" + UUID.randomUUID());
         registerIDSupplier("other", () -> OperatingSystem.OTHER + "-" + UUID.randomUUID());
         registerIDSupplier("serialNumber", () -> generateRandomCharacters() + "-" + UUID.randomUUID());
-        registerIDSupplier("version", () -> generateRandomCharacters().substring(0, 3) + "-" + UUID.randomUUID());
+        registerIDSupplier("social_media", () -> ApplicationCategory.SOCIAL_MEDIA + UUID.randomUUID().toString());
+        registerIDSupplier("game", () -> ApplicationCategory.GAME + UUID.randomUUID().toString());
+        registerIDSupplier("education", () -> ApplicationCategory.EDUCATION + UUID.randomUUID().toString());
+        registerIDSupplier("life_style", () -> ApplicationCategory.LIFE_STYLE + UUID.randomUUID().toString());
         registerIDSupplier("owner", () -> "OWNER" + UUID.randomUUID().toString().substring(0, 7));
     }
 

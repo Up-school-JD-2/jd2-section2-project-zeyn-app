@@ -1,6 +1,5 @@
 package application;
 
-import enums.ApplicationCategory;
 import idGenerator.IdGenerator;
 
 public class Application{
@@ -10,7 +9,7 @@ public class Application{
     private double size;
     private ApplicationCategory category;
     private IdGenerator idGenerator;
-    public Application(String name,  double size, ApplicationCategory category) {
+    public Application(String name,  double size, String version, ApplicationCategory category) {
         idGenerator = IdGenerator.getIdGenerator();
         this.name = name;
         this.size = size;
@@ -34,7 +33,8 @@ public class Application{
     }
     @Override
     public String toString() {
-        return "application.Application{" +
+        return "Application{" +
+                //"id='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", version='" + version + '\'' +
                 ", category=" + category +

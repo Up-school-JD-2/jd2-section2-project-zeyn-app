@@ -1,6 +1,6 @@
 package person;
 
-import enums.Gender;
+import connection.Gender;
 import idGenerator.IdGenerator;
 
 public abstract class Person {
@@ -11,9 +11,8 @@ public abstract class Person {
     protected String emailAddress;
     protected Gender gender;
 
-    private IdGenerator idGenerator = IdGenerator.getIdGenerator();
-
     public Person() {
+        IdGenerator idGenerator = IdGenerator.getIdGenerator();
         id = idGenerator.generateID("family");
     }
 
@@ -64,6 +63,7 @@ public abstract class Person {
     public Gender getGender() {
         return gender;
     }
+
     @Override
     public String toString() {
         return "Person{" +

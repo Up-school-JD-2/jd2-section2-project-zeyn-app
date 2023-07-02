@@ -1,8 +1,9 @@
 package phone;
 
+import application.Application;
 import idGenerator.IdGenerator;
-import person.User;
-import enums.OperatingSystem;
+
+import java.util.Map;
 
 public class Phone {
     private String brand;
@@ -12,22 +13,29 @@ public class Phone {
     private double occupancySpace;
     private double emptySpace;
     private OperatingSystem operatingSystem;
-    private User owner;
-    private IdGenerator idGenerator = IdGenerator.getIdGenerator();
+    Map<String, Application> apps;
 
-    public Phone() {
-        occupancySpace = 0;
-        emptySpace = storageSpace;
+    public Map<String, Application> getApps() {
+        return apps;
     }
 
-    public Phone(String brand, String model, double storageSpace, OperatingSystem operatingSystem, User owner) {
+    public void setApps(Map<String, Application> apps) {
+        this.apps = apps;
+    }
+
+    public Phone() {
+
+    }
+
+    public Phone(String brand, String model, double storageSpace, String operatingSystem) {
+        IdGenerator idGenerator = IdGenerator.getIdGenerator();
         this.brand = brand;
         this.model = model;
         this.storageSpace = storageSpace;
-        this.operatingSystem = operatingSystem;
-        this.owner = owner;
-        owner.setPhone(this);
+        this.operatingSystem = OperatingSystem.valueOf(operatingSystem.toUpperCase());
         this.serialNumber = idGenerator.generateID("serialNumber");
+        occupancySpace = 0;
+        emptySpace = storageSpace;
     }
     public String getSerialNumber() {
         return serialNumber;
@@ -49,11 +57,9 @@ public class Phone {
         return emptySpace;
     }
 
-
-
     @Override
     public String toString() {
-        return "Phone.Phone{" +
+        return "Phone{" +
                 "brand='" + brand + '\'' +
                 ", model='" + model + '\'' +
                 ", serialNumber='" + serialNumber + '\'' +

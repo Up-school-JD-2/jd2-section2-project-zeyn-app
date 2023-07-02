@@ -1,4 +1,4 @@
-package enums;
+package connection;
 
 public enum ConnectionCategory {
     FAMILY,

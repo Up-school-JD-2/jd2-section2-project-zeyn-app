@@ -1,4 +1,4 @@
-package enums;
+package phone;
 
 public enum OperatingSystem {
     IOS,
