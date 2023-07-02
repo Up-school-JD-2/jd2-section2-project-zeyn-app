@@ -1,0 +1,8 @@
+Eksikler
+- Sıralama işlemleri yapılacak
+- sendMessage için dosyalama yapılacak
+- application add için exception fırlatılacak
+
+
+Özellikler
+- Her kullanıcının kapladığı alan 1br olsun
