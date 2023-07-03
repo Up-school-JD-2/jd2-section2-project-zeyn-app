@@ -1,54 +1,49 @@
 package main;
 
+import application.Application;
 import application.ApplicationManager;
-import comparator.ConnectionEmailComparator;
-import comparator.ConnectionNameComparator;
-import comparator.ConnectionPhoneNumberComparator;
-import comparator.ConnectionSurnameComparator;
+import comparator.*;
 import connection.ConnectionManager;
-import exceptions.PhoneNotFoundException;
+import exceptions.ExceptionLogging;
+import exceptions.LoadingExistException;
+import exceptions.NoEnoughEmptySpaceException;
 import person.Connection;
 import person.User;
-import phone.PhoneManager;
 import phone.Phone;
+import phone.PhoneManager;
 
 import java.util.Comparator;
 import java.util.Scanner;
 
 public class PhoneManagementApplication {
-    // Bu sınıf, kullanıcı arayüzü sağlamalı ve telefon yönetim işlemlerini gerçekleştirmelidir.
-    // Kullanıcıdan girişleri almalı, telefon, uygulama ve kişi yönetimi için gerekli işlemleri yapmalıdır.
-    // Ayrıca, depolama alanı kontrolü, veri yedekleme ve geri yükleme gibi işlemleri de gerçekleştirebilirsiniz.
     Scanner scanner = new Scanner(System.in);
-    ApplicationManager applicationManager;
+    Phone phone;
+    User owner;
     ConnectionManager connectionManager;
+    ApplicationManager applicationManager;
     PhoneManager phoneManager;
 
-
     public PhoneManagementApplication() {
-        applicationManager = new ApplicationManager();
+        owner = defineOwnerInfo();
+        phone = definePhoneInfo();
+        applicationManager = new ApplicationManager(phone);
         connectionManager = new ConnectionManager();
         phoneManager = new PhoneManager();
     }
 
     public void start() {
-        // try{
-            /*owner = defineOwnerInfo();
-            System.out.println("Hoşgeldiniz " + owner.getName());
-            defineCurrentPhoneInformation();*/
+        System.out.println("\nHoşgeldiniz " + owner.getName());
+        //applicationManager.list();
+        //applicationManager.getStorageInfo();
         firstScreen();
-        // }
-        /*catch (PhoneNotFoundException e){
-            throw new RuntimeException(e.getMessage());
-        }*/
     }
 
 
     public void firstScreen() {
-        System.out.println("************************");
+        System.out.println();
         firstScreen:
         while (true) {
-            System.out.println("\n1. Uygulamalara Git\n2. Cihaz Değiştir");
+            System.out.println("\n1. Uygulamalara Git\n2. Cihaz Değiştir\n3. Uygulamayı Sonlandır");
             System.out.print("Seçiminiz: ");
             String choice = scanner.next();
             switch (choice) {
@@ -57,7 +52,7 @@ public class PhoneManagementApplication {
                     while (true) {
                         //applicationManager.list();
                         System.out.println("\n\t==============================================");
-                        System.out.println("\t1. Kişilerim\n\t2. Mesajlarım\n\t3. Aramalarım\n\t4. Uygulama Ekle\n\t5. Uygulama Kaldır\n\t6. Görünümü Değiştir\n\t7. Filtrele\n\t8. Geri");
+                        System.out.println("\t1. Kişilerim\n\t2. Mesajlarım\n\t3. Aramalarım\n\t4. Uygulamalarım\n\t5. Uygulama Ekle\n\t6. Uygulama Kaldır\n\t7. Geri");
                         System.out.println("\t==============================================");
                         System.out.print("\tSeçiminiz: ");
                         choice = scanner.next();
@@ -132,7 +127,7 @@ public class PhoneManagementApplication {
                                                             }
 
                                                         }
-                                                        System.out.println("\t" + connection);
+                                                        System.out.println("\t\t" + connection);
                                                         System.out.println("\t\t==============================================\n");
                                                     }
                                                     case "6" -> {
@@ -144,8 +139,8 @@ public class PhoneManagementApplication {
                                         }
                                         case "3" -> {
                                             System.out.println("\n\t\t==============================================");
+                                            System.out.println("\n\t\t1. Kişilerimi İsimlerine Göre Sırala\n\t\t2. Kişilerimi Soyisimlerine Göre Sırala\n\t\t3. Kişilerimi Telefon Numaralarına Göre Sırala\n\t\t4. Kişilerimi Email Adreslerine Göre Sırala\n\t\t5. Kişilerimi Kategorilerine Göre Grupla\n\t\t6. Kişilerimi Cinsiyetlerine Göre Grupla\n\t\t7. Geri");
                                             while (true) {
-                                                System.out.println("\n\t\t1. Kişilerimi İsimlerine Göre Sırala\n\t\t2. Kişilerimi Soyisimlerine Göre Sırala\n\t\t3. Kişilerimi Telefon Numaralarına Göre Sırala\n\t\t4. Kişilerimi Email Adreslerine Göre Sırala\n\t\t5. Kişilerimi Kategorilerine Göre Grupla\n\t\t6. Kişilerimi Cinsiyetlerine Göre Grupla\n\t\t7. Geri");
                                                 System.out.print("\t\tKişiler Nasıl Sıralansın: ");
                                                 Comparator<Connection> comparator;
                                                 String filed = scanner.next();
@@ -262,13 +257,104 @@ public class PhoneManagementApplication {
                                     }
                                 }
                             }
-                            case "8" -> {
+                            case "4" -> {
+                                applicationManager.list();
+                                apps:
+                                while (true) {
+                                    System.out.println("\n\t1. Hafıza durumunu göster\n\t2. Görünümü Değiştir&Filtrele\n\t3. Geri");
+                                    System.out.print("\tSeçiminiz: ");
+                                    String appChoice = scanner.next();
+                                    switch (appChoice) {
+                                        case "1" -> applicationManager.getStorageInfo();
+                                        case "2" -> {
+                                            while (true) {
+                                                Comparator<Application> comparator;
+                                                System.out.println("\n\t\t1. Uygulamaları İsimlerine Göre Sırala\n\t\t2. Uygulamalarımı Boyutlarına Göre Sırala\n\t\t3. Uygulamalarımı Kategorilerine Göre Grupla\n\t\t4. Uygulamalarımı Kategorilerine Göre Filtrele\n\t\t5. Geri");
+                                                System.out.print("\t\tKişiler Nasıl Sıralansın: ");
+                                                String comparatorChoice = scanner.next();
+                                                switch (comparatorChoice) {
+                                                    case "1" -> {
+                                                        comparator = new ApplicationNameComparator();
+                                                        applicationManager.sort(applicationManager.getApps(), comparator);
+                                                    }
+                                                    case "2" -> {
+                                                        comparator = new ApplicationSizeComparator();
+                                                        applicationManager.sort(applicationManager.getApps(), comparator);
+                                                    }
+                                                    case "3" -> {
+                                                        System.out.println();
+                                                        applicationManager.groupByCategory().forEach((category, application) -> System.out.println("\t\t" + category.name() + ": " + application));
+                                                    }
+                                                    case "4" -> {
+                                                        // filtreleme işlemleri
+
+                                                        while (true) {
+                                                            System.out.println("\n\t\t1. Oyunlarımı Getir\n\t\t2. Sosyal Medya Uygulamalarımı Getir\n\t\t3. Eğitici Uygulamalarımı Getir\n\t\t4. Yaşam/Stil Uygulamalarımı Getir\n\t\t5. Diğer/Default Uygulamalarımı Getir\n\t\t6. Geri");
+                                                            System.out.print("\t\tHangi Uygulamalar filtrelensin: ");
+                                                            String filed = scanner.next();
+                                                            switch (filed) {
+                                                                case "1" ->
+                                                                        applicationManager.filterByCategory("game").forEach(application -> System.out.println("\t\tGame: " + application));
+                                                                case "2" ->
+                                                                        applicationManager.filterByCategory("social_media").forEach(application -> System.out.println("\t\tSocial Media" + application));
+                                                                case "3" ->
+                                                                        applicationManager.filterByCategory("education").forEach(application -> System.out.println("\t\tEducation" + application));
+                                                                case "4" ->
+                                                                        applicationManager.filterByCategory("life_style").forEach(application -> System.out.println("\t\tLife/Style" + application));
+                                                                case "5" ->
+                                                                        applicationManager.filterByCategory("other").forEach(application -> System.out.println("\t\tOther: " + application));
+
+                                                                case "6" -> {
+                                                                    continue applicationsScreen;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    case "5" -> {
+                                                        break apps;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        case "3" ->{
+                                            break apps;
+                                        }
+                                    }
+                                }
+
+                            }
+                            case "5" -> {
+                                applicationManager.getPlayStore().forEach(application -> System.out.println("\t\t" + application));
+                                System.out.print("Eklemek istediğiniz uygulama numarasını giriniz: ");
+                                int chosenApp = scanner.nextInt();
+                                scanner.nextLine();
+                                Application application = applicationManager.getPlayStore().get(chosenApp);
+                                try {
+                                    applicationManager.add(application);
+                                    applicationManager.list();
+                                } catch (NoEnoughEmptySpaceException e) {
+                                    ExceptionLogging.logKaydet("Uygulama eklenemedi");
+                                }
+                                catch (LoadingExistException e){
+                                    ExceptionLogging.logKaydet("Telefonda bulunan uygulama eklenmedi");
+                                }
+                            }
+                            case "6" -> {
+                                applicationManager.list();
+                                System.out.print("Kaldırmak istediğiniz uygulama numarasını giriniz: ");
+                                int chosenApp = scanner.nextInt();
+                                scanner.nextLine();
+                                Application application = applicationManager.getApps().values().stream().toList().get(chosenApp);
+                                applicationManager.remove(application);
+                            }
+                            case "7" -> {
                                 continue firstScreen;
                             }
                         }
                     }
                 }
-                case "2" -> {
+                case "2" ->
+                        System.out.println("Üzerinde çalışılıyor");/*{/*
                     System.out.println("1. Cihaz Seç\n2. Cihaz Ekle\n3. Kaldır");
                     System.out.print("Seçiminiz: ");
                     choice = scanner.next();
@@ -297,30 +383,18 @@ public class PhoneManagementApplication {
                             // go to this switch
                         }
                     }
+
+                }*/
+                case "3"->{
+                    break firstScreen;
                 }
             }
         }
 
     }
 
-    public void defineCurrentPhoneInformation() throws PhoneNotFoundException {
-        // Phone(String brand, String model, double storageSpace, OperatingSystem operatingSystem)
-        System.out.println("Telefon bilgilerini giriniz");
-        System.out.print("Marka: ");
-        String brand = scanner.nextLine();
-        System.out.print("Model: ");
-        String model = scanner.nextLine();
-        System.out.print("Depolama Alanı: ");
-        double storageSpace = scanner.nextDouble();
-        scanner.nextLine();
-        System.out.print("İşletim sistemi(android/ios/other): ");
-        String operatingSystem = scanner.nextLine();
-
-        Phone phone = new Phone(brand, model, storageSpace, operatingSystem);
-        phoneManager.setCurrentPhone(phone);
-    }
-
     public User defineOwnerInfo() {
+        System.out.println("Kullanıcı Bilgilerinizi Girer Misiniz");
         System.out.print("Adınız: ");
         String name = scanner.nextLine();
         System.out.print("Soyadınız: ");
@@ -333,5 +407,20 @@ public class PhoneManagementApplication {
         String gender = scanner.nextLine();
 
         return new User(name, surname, phoneNumber, emailAddress, gender);
+    }
+
+    public Phone definePhoneInfo() {
+        // Phone(String brand, String model, double storageSpace, OperatingSystem operatingSystem, User owner)
+        System.out.println("Telefon bilgilerinizi girebilir misiniz");
+        System.out.print("Brand: ");
+        String brand = scanner.nextLine();
+        System.out.print("Model: ");
+        String model = scanner.nextLine();
+        System.out.print("Operating System(ios/android/other): ");
+        String operatingSystem = scanner.nextLine();
+        System.out.print("Storage Space(GB): ");
+        double storageSpace = scanner.nextDouble();
+
+        return new Phone(brand, model, storageSpace, operatingSystem);
     }
 }

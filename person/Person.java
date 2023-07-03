@@ -3,6 +3,8 @@ package person;
 import connection.Gender;
 import idGenerator.IdGenerator;
 
+import java.util.Objects;
+
 public abstract class Person {
     protected String id;
     protected String name;
@@ -73,5 +75,18 @@ public abstract class Person {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) && Objects.equals(name, person.name) && Objects.equals(surname, person.surname) && Objects.equals(phoneNumber, person.phoneNumber) && Objects.equals(emailAddress, person.emailAddress) && gender == person.gender;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, phoneNumber, emailAddress, gender);
     }
 }

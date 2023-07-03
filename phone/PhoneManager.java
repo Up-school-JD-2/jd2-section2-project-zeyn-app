@@ -1,7 +1,5 @@
 package phone;
 
-import application.ApplicationManager;
-import exceptions.PhoneNotFoundException;
 import interfaces.I_Manager;
 
 import java.util.HashMap;
@@ -11,15 +9,14 @@ import java.util.function.Consumer;
 
 public class PhoneManager implements I_Manager<Phone> {
     Map<String, Phone> phones = new HashMap<>();
-    private Phone currentPhone;
-    ApplicationManager applicationManager = new ApplicationManager();
     Scanner scanner = new Scanner(System.in);
 
     public PhoneManager() {
+        //phone = create();
         defaultPhones();
     }
 
-    public void setCurrentPhone(Phone currentPhone) throws PhoneNotFoundException {
+    /*public void setCurrentPhone(Phone currentPhone) throws PhoneNotFoundException {
         if (phones.isEmpty()) throw new PhoneNotFoundException("Sistemde herhangi bir teledfon kaydı bulunmamaktadır.");
         this.currentPhone = currentPhone;
     }
@@ -36,11 +33,14 @@ public class PhoneManager implements I_Manager<Phone> {
 
     public Phone getCurrentPhone() {
         return currentPhone;
-    }
+    }*/
 
     public Map<String, Phone> getPhones() {
         return phones;
     }
+    /*public Phone getPhone() {
+        return phone;
+    }*/
 
     @Override
     public Phone add(Phone phone) {
@@ -68,21 +68,18 @@ public class PhoneManager implements I_Manager<Phone> {
         add(secondPhone);
     }
 
-    private void defaultApps() {
-    }
-
-    public void create() {
+    public Phone create() {
         // Phone(String brand, String model, double storageSpace, OperatingSystem operatingSystem, User owner)
+        System.out.println("Telefon bilgilerinizi girebilir misiniz");
         System.out.print("Brand: ");
-        String brand = scanner.next();
+        String brand = scanner.nextLine();
         System.out.print("Model: ");
-        String model = scanner.next();
+        String model = scanner.nextLine();
         System.out.print("Operating System(ios/android/other): ");
-        String operatingSystem = scanner.next();
+        String operatingSystem = scanner.nextLine();
         System.out.print("Storage Space: ");
         double storageSpace = scanner.nextDouble();
 
-        Phone phone = new Phone(brand, model, storageSpace, operatingSystem);
-        add(phone);
+        return new Phone(brand, model, storageSpace, operatingSystem);
     }
 }

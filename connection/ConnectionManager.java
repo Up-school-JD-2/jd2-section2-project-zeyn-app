@@ -9,7 +9,6 @@ import java.util.*;
 public class ConnectionManager extends A_ConnectionManager {
     Scanner scanner = new Scanner(System.in);
     private Map<String, List<String>> sentMessages;
-    private Map<String, List<String>> receivedMessages;
 
     public ConnectionManager() {
         sentMessages = new HashMap<>();
@@ -62,12 +61,12 @@ public class ConnectionManager extends A_ConnectionManager {
 
     @Override
     public List<Connection> filterByCategory(String specifiedCategory) {
-        return filterConnection(connection -> connection.getCategory().name().equalsIgnoreCase(specifiedCategory));
+        return filter(connection -> connection.getCategory().name().equalsIgnoreCase(specifiedCategory));
     }
 
     @Override
     public List<Connection> filterByGender(String specifiedGender) {
-        return filterConnection(connection -> connection.getGender().name().equalsIgnoreCase(specifiedGender));
+        return filter(connection -> connection.getGender().name().equalsIgnoreCase(specifiedGender));
     }// getMyFamily,
 
     @Override
@@ -86,7 +85,10 @@ public class ConnectionManager extends A_ConnectionManager {
     }
 
     public void getSentMessages(String phoneNumber) {
-        sentMessages.get(phoneNumber).forEach(message -> System.out.print("\t\t" + message));
+        if (sentMessages.containsKey(phoneNumber))
+            sentMessages.get(phoneNumber).forEach(message -> System.out.print("\t\t" + message));
+        else
+            System.out.println("\t\tHenüz bir mesaj gönderilmemiş.");
     }
 
     @Override
@@ -128,7 +130,7 @@ public class ConnectionManager extends A_ConnectionManager {
 
         Connection connection = new Connection(name, surname, phoneNumber, emailAddress, category, gender);
 
-        if (connections.keySet().contains(connection.getPhoneNumber())) {
+        if (connections.containsKey(connection.getPhoneNumber())) {
             System.out.print("\n\t\tGirdiğiniz telefon numarasına ait kullanıcı bilgileri bulunmaktadır. Değişiklikler kaydedilsin mi? (E/H): ");
             String choice = scanner.next();
             if (choice.startsWith("E") | choice.startsWith("e"))

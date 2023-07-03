@@ -1,8 +1,9 @@
 package connection;
 
 import interfaces.I_FunctionalInterface;
+import interfaces.I_GroupAndFilter;
 import interfaces.I_Manager;
-import interfaces.I_SortConnections;
+import interfaces.I_Sort;
 import person.Connection;
 
 import java.util.*;
@@ -10,9 +11,8 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public abstract class A_ConnectionManager implements I_Manager<Connection>, I_FunctionalInterface, I_SortConnections {
+public abstract class A_ConnectionManager implements I_Manager<Connection>, I_FunctionalInterface, I_Sort<Connection>, I_GroupAndFilter<Connection> {
     Map<String, Connection> connections;
-    List<Connection> sortedConnections;
 
     public Map<String, Connection> getConnections() {
         return connections;
@@ -39,12 +39,12 @@ public abstract class A_ConnectionManager implements I_Manager<Connection>, I_Fu
     }
 
     @Override
-    public List<Connection> filterConnection(Predicate<Connection> filteredCondition) {
+    public List<Connection> filter(Predicate<Connection> filteredCondition) {
         return connections.values().stream().filter(filteredCondition).toList();
     }
 
     @Override
-    public Map<ConnectionCategory, List<Connection>> groupByCategory() {
+    public Map<Enum, List<Connection>> groupByCategory() {
         return connections.values().stream().collect(Collectors.groupingBy(Connection::getCategory, Collectors.toList()));
     }
 
@@ -60,8 +60,7 @@ public abstract class A_ConnectionManager implements I_Manager<Connection>, I_Fu
 
     @Override
     public void sort(Map<String, Connection> connections, Comparator<Connection> comparator) {
-        sortedConnections = connections.values().stream().sorted(comparator).toList();
-        sortedConnections.forEach(connection -> System.out.println("\t\t" + connection));
+        connections.values().stream().sorted(comparator).toList().forEach(connection -> System.out.println("\t\t" + connection));
     }
 
     public void list() {

@@ -2,6 +2,7 @@ Eksikler
 - Sıralama işlemleri yapılacak
 - sendMessage için dosyalama yapılacak
 - application add için exception fırlatılacak
+- default ları ekle
 
 
 Özellikler
