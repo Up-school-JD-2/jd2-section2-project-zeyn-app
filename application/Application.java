@@ -43,13 +43,11 @@ public class Application{
 
     @Override
     public String toString() {
-        return "Application{" +
-                //"id='" + id + '\'' +
+        return
                 "name='" + name + '\'' +
                 ", version='" + version + '\'' +
                 ", category=" + category +
-                ", size=" + size +
-                '}';
+                ", size=" + size;
     }
 
     @Override

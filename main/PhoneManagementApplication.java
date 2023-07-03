@@ -356,7 +356,7 @@ public class PhoneManagementApplication {
                         }
                     }
                 }
-                case "2" -> System.out.println("Üzerinde çalışılıyor");/*{/*
+                case "2" -> System.out.println("\t\tÜzerinde çalışılıyor");/*{/*
                     System.out.println("1. Cihaz Seç\n2. Cihaz Ekle\n3. Kaldır");
                     System.out.print("Seçiminiz: ");
                     choice = scanner.next();
@@ -406,7 +406,6 @@ public class PhoneManagementApplication {
     }
 
     public Phone definePhoneInfo() {
-        // Phone(String brand, String model, double storageSpace, OperatingSystem operatingSystem, User owner)
         System.out.println("Telefon bilgilerinizi girebilir misiniz");
         System.out.print("Brand: ");
         String brand = scanner.next();

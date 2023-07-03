@@ -68,13 +68,12 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", gender='" + gender + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                '}';
+                ", emailAddress='" + emailAddress + '\'';
     }
 
     @Override

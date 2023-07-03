@@ -1,0 +1,6 @@
+05241524178:name='Zeynep', surname='Özdemir', gender='F', phoneNumber='05241524178', emailAddress='zeynepozdemir@gmail.com'
+05241524179:name='Cemre', surname='Okçu', gender='F', phoneNumber='05241524179', emailAddress='cmrkc@gmail.com'
+05241524188:name='Burcu', surname='Şık', gender='F', phoneNumber='05241524188', emailAddress='brcsk@gmail.com'
+05241524198:name='Mehmet', surname='Aşar', gender='M', phoneNumber='05241524198', emailAddress='mhmtasr@gmail.com'
+05241534178:name='Selim', surname='Tekin', gender='M', phoneNumber='05241534178', emailAddress='slmtkn@gmail.com'
+05245534178:name='Selin', surname='Tekin', gender='F', phoneNumber='05245534178', emailAddress='slntkn@gmail.com'
