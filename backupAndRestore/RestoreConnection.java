@@ -1,6 +1,7 @@
 package backupAndRestore;
 
 import connection.Connection;
+import domain.Constant;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,8 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RestoreConnection {
+    String fileName = Constant.CONNECTION_FILE;
     private Map<String, Connection> restoredConnections = new HashMap<>();
-    public Map<String, Connection> readDataFromFile(String fileName) {
+    public Map<String, Connection> readDataFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {

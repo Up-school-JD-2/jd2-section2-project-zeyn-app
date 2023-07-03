@@ -2,6 +2,8 @@ package main;
 
 import application.Application;
 import application.ApplicationManager;
+import backupAndRestore.RestoreApplication;
+import backupAndRestore.RestoreConnection;
 import comparator.*;
 import connection.ConnectionManager;
 import exceptions.*;
@@ -41,7 +43,7 @@ public class PhoneManagementApplication {
         System.out.println();
         firstScreen:
         while (true) {
-            System.out.println("\n1. Uygulamalara Git\n2. Cihaz Değiştir\n3. Uygulamayı Sonlandır");
+            System.out.println("\n1. Uygulamalara Git\n2. Verileri Yedekle&Geri Yükle\n3. Uygulamayı Sonlandır");
             System.out.print("Seçiminiz: ");
             String choice = scanner.next();
             switch (choice) {
@@ -323,7 +325,7 @@ public class PhoneManagementApplication {
                             }
                             case "5" -> {
                                 applicationManager.getPlayStore().forEach(application -> System.out.println("\t\t" + application));
-                                System.out.print("Eklemek istediğiniz uygulama numarasını giriniz: ");
+                                System.out.print("\t\tEklemek istediğiniz uygulama numarasını giriniz: ");
                                 int chosenApp = scanner.nextInt();
                                 chosenApp--;
                                 scanner.nextLine();
@@ -332,15 +334,15 @@ public class PhoneManagementApplication {
                                     applicationManager.add(application);
                                     applicationManager.list();
                                 } catch (NoEnoughEmptySpaceException e) {
-                                    System.out.println("Uygulama eklemek için telefonda yeterince yer yok.");
+                                    System.out.println("\t\tUygulama eklemek için telefonda yeterince yer yok.");
                                 } catch (LoadingExistException e) {
-                                    System.out.println("Yüklemeye çalıştığınız uygulama telefonda mevcuttur.");
+                                    System.out.println("\t\tYüklemeye çalıştığınız uygulama telefonda mevcuttur.");
                                 }
                             }
                             case "6" -> {
                                 try {
                                     applicationManager.list();
-                                    System.out.print("Kaldırmak istediğiniz uygulama numarasını giriniz: ");
+                                    System.out.print("\t\tKaldırmak istediğiniz uygulama numarasını giriniz: ");
                                     int chosenApp = scanner.nextInt();
                                     scanner.nextLine();
                                     Application application = applicationManager.getApps().values().stream().toList().get(chosenApp);
@@ -356,7 +358,30 @@ public class PhoneManagementApplication {
                         }
                     }
                 }
-                case "2" -> System.out.println("\t\tÜzerinde çalışılıyor");/*{/*
+                case "2" ->{
+                    System.out.println("\n\t\t\tÖnemli bilgi: her ekleme işleminde veriler yedeklenmektedir. Bu yüzden yedekleme işlemi ayrıca seçenek olarak sunulmamıştır");
+                    System.out.println("\t\t1. Kişilerimi Yedekle\n\t\t2. Uygulamalarımı Yedekle\n\t\t3. Geri");
+                    System.out.print("\t\tSeçiminiz: ");
+                    String restoreChoice = scanner.next();
+                    switch (restoreChoice){
+                        case "1" ->{
+                            RestoreConnection restoreConnection = new RestoreConnection();
+                            connectionManager.setConnections(restoreConnection.readDataFromFile());
+                            connectionManager.getConnections().values().forEach(connection -> System.out.println("\t\t" + connection));
+                        }
+                        case "2" ->{
+                            RestoreApplication restoreApplication = new RestoreApplication();
+                            applicationManager.setApps(restoreApplication.readDataFromFile());
+                            applicationManager.getApps().values().forEach(application -> System.out.println("\t\t" + application));
+                        }
+                        case "3" ->{
+                            //continue firstScreen;
+                        }
+                    }
+                }
+
+                /*case "2" -> System.out.println("\t\tÜzerinde çalışılıyor");
+                {
                     System.out.println("1. Cihaz Seç\n2. Cihaz Ekle\n3. Kaldır");
                     System.out.print("Seçiminiz: ");
                     choice = scanner.next();

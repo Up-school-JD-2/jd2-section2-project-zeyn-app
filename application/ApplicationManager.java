@@ -27,6 +27,10 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
         return apps;
     }
 
+    public void setApps(Map<String, Application> apps) {
+        this.apps = apps;
+    }
+
     public ApplicationManager(Phone phone) {
         this.phone = phone;
         playStore = new PlayStore();
