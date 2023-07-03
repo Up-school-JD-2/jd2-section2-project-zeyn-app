@@ -99,12 +99,12 @@ public class ConnectionManager extends A_ConnectionManager {
     }
 
     private void init() {
-        Connection connection1 = new Connection("Zeynep", "Özdemir", "5241524178", "zeynepozdemir@gmail.com", "FAMILY", "F");
-        Connection connection2 = new Connection("Cemre", "Okçu", "5241524179", "cmrkc@gmail.com", "FRIEND", "f");
-        Connection connection3 = new Connection("Burcu", "Şık", "5241524188", "brcsk@gmail.com", "COLLEAGUE", "f");
-        Connection connection4 = new Connection("Mehmet", "Aşar", "5241524198", "mhmtasr@gmail.com", "friend", "m");
-        Connection connection5 = new Connection("Selim", "Tekin", "5241534178", "slmtkn@gmail.com", "FAMILY", "M");
-        Connection connection6 = new Connection("Selin", "Tekin", "5245534178", "slntkn@gmail.com", "FAMILY", "F");
+        Connection connection1 = new Connection("Zeynep", "Özdemir", "05241524178", "zeynepozdemir@gmail.com", "FAMILY", "F");
+        Connection connection2 = new Connection("Cemre", "Okçu", "05241524179", "cmrkc@gmail.com", "FRIEND", "f");
+        Connection connection3 = new Connection("Burcu", "Şık", "05241524188", "brcsk@gmail.com", "COLLEAGUE", "f");
+        Connection connection4 = new Connection("Mehmet", "Aşar", "05241524198", "mhmtasr@gmail.com", "friend", "m");
+        Connection connection5 = new Connection("Selim", "Tekin", "05241534178", "slmtkn@gmail.com", "FAMILY", "M");
+        Connection connection6 = new Connection("Selin", "Tekin", "05245534178", "slntkn@gmail.com", "FAMILY", "F");
 
         add(connection1);
         add(connection2);

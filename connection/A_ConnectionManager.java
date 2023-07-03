@@ -1,5 +1,6 @@
 package connection;
 
+import backup.BackUpConnections;
 import interfaces.I_FunctionalInterface;
 import interfaces.I_GroupAndFilter;
 import interfaces.I_Manager;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 public abstract class A_ConnectionManager implements I_Manager<Connection>, I_FunctionalInterface, I_Sort<Connection>, I_GroupAndFilter<Connection> {
     Map<String, Connection> connections;
+    BackUpConnections backUpConnections = new BackUpConnections();
 
     public Map<String, Connection> getConnections() {
         return connections;
@@ -23,6 +25,7 @@ public abstract class A_ConnectionManager implements I_Manager<Connection>, I_Fu
 
     @Override
     public Connection add(Connection connection) {
+        backUpConnections.backUp(connection.getPhoneNumber(), connection);
         return connections.put(connection.getPhoneNumber(), connection);
     }
 

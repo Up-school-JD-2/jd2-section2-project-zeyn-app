@@ -1,5 +1,6 @@
 package application;
 
+import backup.BackUpApplication;
 import exceptions.LoadingExistException;
 import exceptions.NoEnoughEmptySpaceException;
 import exceptions.NotFoundApplicationException;
@@ -20,7 +21,7 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
     PlayStore playStore;
     Phone phone;
     Map<String, Application> apps = new HashMap<>();
-    public static int appCount = 0;
+    BackUpApplication backUpApplication = new BackUpApplication();
 
     public Map<String, Application> getApps() {
         return apps;
@@ -55,7 +56,7 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
         if (hasEnoughSpace(application)) {
             if (!apps.containsKey(createAppKey(application))) {
                 phone.setOccupancySpace(application.getSize());
-                appCount++;
+                backUpApplication.backUp(createAppKey(application), application);
                 return apps.put(createAppKey(application), application);
             }
             throw new LoadingExistException("Telefonuzda bu uygulama zaten bulunmaktadır.");
@@ -69,7 +70,6 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
         if (!apps.containsKey(createAppKey(application)))
             throw new NotFoundApplicationException("Böyle bir kayıt bulunamadı");
         phone.setOccupancySpace(-application.getSize());
-        appCount--;
         return apps.remove(createAppKey(application));
     }
 

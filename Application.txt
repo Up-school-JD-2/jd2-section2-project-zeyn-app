@@ -1,0 +1,3 @@
+KişilerimV1.5.4=Application{name='Kişilerim', version='V1.5.4', category=OTHER, size=150.0}
+AramalarımV1.5.4=Application{name='Aramalarım', version='V1.5.4', category=OTHER, size=50.0}
+MesajlarımV1.2=Application{name='Mesajlarım', version='V1.2', category=OTHER, size=200.0}

@@ -325,6 +325,7 @@ public class PhoneManagementApplication {
                                 applicationManager.getPlayStore().forEach(application -> System.out.println("\t\t" + application));
                                 System.out.print("Eklemek istediğiniz uygulama numarasını giriniz: ");
                                 int chosenApp = scanner.nextInt();
+                                chosenApp--;
                                 scanner.nextLine();
                                 Application application = applicationManager.getPlayStore().get(chosenApp);
                                 try {
