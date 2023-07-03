@@ -4,7 +4,6 @@ import interfaces.I_FunctionalInterface;
 import interfaces.I_GroupAndFilter;
 import interfaces.I_Manager;
 import interfaces.I_Sort;
-import person.Connection;
 
 import java.util.*;
 import java.util.function.Consumer;

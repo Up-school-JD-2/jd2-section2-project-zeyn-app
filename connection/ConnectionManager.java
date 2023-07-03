@@ -4,7 +4,6 @@ import exceptions.ConnectionCategoryInvalidException;
 import exceptions.ConnectionGenderInvalidException;
 import exceptions.EmailAddressInvalidException;
 import exceptions.PhoneNumberInvalidException;
-import person.Connection;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -160,11 +159,11 @@ public class ConnectionManager extends A_ConnectionManager {
     }
 
     public boolean isValidEmail(String email) {
-        return (email.contains("@") && email.endsWith(".com")) ? true : false;
+        return (email.contains("@") && email.endsWith(".com"));
     }
 
     public boolean isValidPhoneNumber(String phoneNumber) {
-        return (phoneNumber.startsWith("0") && phoneNumber.length() == 11) ? true : false;
+        return (phoneNumber.startsWith("0") && phoneNumber.length() == 11);
     }
     public boolean isValidGender(String gender){
         return (gender.equalsIgnoreCase("m") || gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("f") || gender.equalsIgnoreCase("F"));

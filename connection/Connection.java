@@ -1,7 +1,7 @@
-package person;
+package connection;
 
-import connection.ConnectionCategory;
 import idGenerator.IdGenerator;
+import person.Person;
 
 public class Connection extends Person {
     private ConnectionCategory category;

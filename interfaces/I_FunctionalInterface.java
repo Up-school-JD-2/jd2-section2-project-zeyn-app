@@ -1,7 +1,7 @@
 package interfaces;
 
 import connection.Gender;
-import person.Connection;
+import connection.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;

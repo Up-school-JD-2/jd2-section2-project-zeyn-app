@@ -5,7 +5,7 @@ import application.ApplicationManager;
 import comparator.*;
 import connection.ConnectionManager;
 import exceptions.*;
-import person.Connection;
+import connection.Connection;
 import person.User;
 import phone.Phone;
 import phone.PhoneManager;
@@ -331,9 +331,9 @@ public class PhoneManagementApplication {
                                     applicationManager.add(application);
                                     applicationManager.list();
                                 } catch (NoEnoughEmptySpaceException e) {
-                                    ExceptionLogging.logKaydet("Uygulama eklenemedi");
+                                    System.out.println("Uygulama eklemek için telefonda yeterince yer yok.");
                                 } catch (LoadingExistException e) {
-                                    ExceptionLogging.logKaydet("Telefonda bulunan uygulama eklenmedi");
+                                    System.out.println("Yüklemeye çalıştığınız uygulama telefonda mevcuttur.");
                                 }
                             }
                             case "6" -> {

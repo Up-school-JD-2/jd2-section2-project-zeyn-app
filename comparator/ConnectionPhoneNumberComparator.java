@@ -1,6 +1,6 @@
 package comparator;
 
-import person.Connection;
+import connection.Connection;
 
 import java.util.Comparator;
 

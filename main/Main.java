@@ -1,7 +1,7 @@
 package main;
 
 import connection.ConnectionManager;
-import person.Connection;
+import connection.Connection;
 
 public class Main {
     public static void main(String[] args) {
