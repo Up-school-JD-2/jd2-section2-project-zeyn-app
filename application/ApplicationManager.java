@@ -2,6 +2,7 @@ package application;
 
 import exceptions.LoadingExistException;
 import exceptions.NoEnoughEmptySpaceException;
+import exceptions.NotFoundApplicationException;
 import interfaces.I_GroupAndFilter;
 import interfaces.I_Manager;
 import interfaces.I_Sort;
@@ -31,7 +32,7 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
         defaultApplications();
     }
 
-    public List<Application> getPlayStore(){
+    public List<Application> getPlayStore() {
         return playStore.getApps();
     }
 
@@ -39,13 +40,8 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
         System.out.println("\n\t-----------------------------------------------");
         System.out.println("\tTelefonumda Yüklü Olan Uygulamalar");
         apps.values().forEach(application -> System.out.println("\t" + application));
-
-        /*for(int i=0; i<appCount; i++){
-            System.out.println("\t"+(i+1) + ". " + apps.values().stream().toList().get(i).getName());
-        }
-        System.out.println("\t-----------------------------------------------");*/
-        //apps.values().forEach(System.out::println);
     }
+
     private String createAppKey(Application application) {
         return application.getName() + application.getVersion();
     }
@@ -56,10 +52,9 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
 
     @Override
     public Application add(Application application) throws NoEnoughEmptySpaceException, LoadingExistException {
-        if (hasEnoughSpace(application)){
-            if(!apps.containsKey(createAppKey(application))){
+        if (hasEnoughSpace(application)) {
+            if (!apps.containsKey(createAppKey(application))) {
                 phone.setOccupancySpace(application.getSize());
-                // getStorageInfo();
                 appCount++;
                 return apps.put(createAppKey(application), application);
             }
@@ -68,10 +63,12 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
 
         throw new NoEnoughEmptySpaceException("Telefonda yeterli boş alan bulunmamaktadır.");
     }
+
     @Override
-    public Application remove(Application application) {
+    public Application remove(Application application) throws NotFoundApplicationException {
+        if (!apps.containsKey(createAppKey(application)))
+            throw new NotFoundApplicationException("Böyle bir kayıt bulunamadı");
         phone.setOccupancySpace(-application.getSize());
-        //getStorageInfo();
         appCount--;
         return apps.remove(createAppKey(application));
     }
@@ -91,15 +88,13 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
         Application calls = new Application("Aramalarım", 50, "V1.5.4", ApplicationCategory.OTHER);
         Application messages = new Application("Mesajlarım", 200, "V1.2", ApplicationCategory.OTHER);
 
-        try{
+        try {
             add(connections);
             add(calls);
             add(messages);
-        }
-        catch (NoEnoughEmptySpaceException e){
+        } catch (NoEnoughEmptySpaceException e) {
             System.out.println(e.getMessage());
-        }
-        catch (LoadingExistException e){
+        } catch (LoadingExistException e) {
             System.out.println(e.getMessage());
         }
 
@@ -114,7 +109,8 @@ public class ApplicationManager implements I_Manager<Application>, I_Sort<Applic
 
     @Override
     public void sort(Map<String, Application> connections, Comparator<Application> comparator) {
-        apps.values().stream().sorted(comparator).toList().forEach(application -> System.out.println("\t\t" +application));
+        if (!connections.isEmpty())
+            apps.values().stream().sorted(comparator).toList().forEach(application -> System.out.println("\t\t" + application));
     }
 
     @Override

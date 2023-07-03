@@ -12,4 +12,8 @@ public class User extends Person {
         IdGenerator idGenerator = IdGenerator.getIdGenerator();
         id = idGenerator.generateID("owner");
     }
+    public User(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
 }

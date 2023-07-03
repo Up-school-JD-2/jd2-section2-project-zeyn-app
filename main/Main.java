@@ -29,42 +29,7 @@ public class Main {
         connectionManager.add(connection4);
         connectionManager.add(connection5);
         connectionManager.add(connection6);
-/*
-        connectionManager.list();
 
-        connectionManager.remove(connection4);
-
-        System.out.println("****************************************");
-        connectionManager.list();
-
-        connectionManager.updateOnlyEmailAddress(connection3);
-        connectionManager.updateOnlyNameAndSurname(connection2);
-        connectionManager.updateOnlyPhoneNumber(connection1);
-        connectionManager.updateAll(connection4);
-
-       System.out.println("\n\n****************************************");
-        connectionManager.list();
-
-        System.out.println("\n\n****************************************");
-        System.out.println(connectionManager.filterByGender("M"));
-        System.out.println(connectionManager.filterByCategory("family"));
-
-        System.out.println("\n\n****************************************");
-        Map<ConnectionCategory, Long> groupCategory = connectionManager.groupByCategory();
-        groupCategory.forEach(((category, countOfConnections) -> System.out.println(category + ": " + countOfConnections) ));
-
-        System.out.println("\n\n****************************************");
-        Map<Gender, Long> groupGender = connectionManager.groupByGender();
-        groupGender.forEach(((gender, countOfConnections) -> System.out.println(gender + ": " + countOfConnections) ));
-
-        System.out.println("\n\n****************************************");
-        connectionManager.call(connection1.getPhoneNumber());
-
-        System.out.println("\n\n****************************************");*/
-        /*connectionManager.sendMessage("5241534178", "Merhaba, nasılsın?");
-        connectionManager.sendMessage("5241534178", "Merhaba, ben de iyiyim");
-        connectionManager.sendMessage("5241534178", "Merhaba, yine ben");
-        connectionManager.sendMessage("5241534178", "Merhaba, yine mi ben?");*/
 
         PhoneManagementApplication phoneManagementApplication = new PhoneManagementApplication();
         phoneManagementApplication.start();

@@ -4,9 +4,7 @@ import application.Application;
 import application.ApplicationManager;
 import comparator.*;
 import connection.ConnectionManager;
-import exceptions.ExceptionLogging;
-import exceptions.LoadingExistException;
-import exceptions.NoEnoughEmptySpaceException;
+import exceptions.*;
 import person.Connection;
 import person.User;
 import phone.Phone;
@@ -24,15 +22,15 @@ public class PhoneManagementApplication {
     PhoneManager phoneManager;
 
     public PhoneManagementApplication() {
-        owner = defineOwnerInfo();
+        connectionManager = new ConnectionManager();
+        defineOwnerInfo();
         phone = definePhoneInfo();
         applicationManager = new ApplicationManager(phone);
-        connectionManager = new ConnectionManager();
         phoneManager = new PhoneManager();
     }
 
     public void start() {
-        System.out.println("\nHoşgeldiniz " + owner.getName());
+        System.out.println("\nHoşgeldiniz " + owner.getName() + " " + owner.getSurname());
         //applicationManager.list();
         //applicationManager.getStorageInfo();
         firstScreen();
@@ -316,7 +314,7 @@ public class PhoneManagementApplication {
                                                 }
                                             }
                                         }
-                                        case "3" ->{
+                                        case "3" -> {
                                             break apps;
                                         }
                                     }
@@ -334,18 +332,22 @@ public class PhoneManagementApplication {
                                     applicationManager.list();
                                 } catch (NoEnoughEmptySpaceException e) {
                                     ExceptionLogging.logKaydet("Uygulama eklenemedi");
-                                }
-                                catch (LoadingExistException e){
+                                } catch (LoadingExistException e) {
                                     ExceptionLogging.logKaydet("Telefonda bulunan uygulama eklenmedi");
                                 }
                             }
                             case "6" -> {
-                                applicationManager.list();
-                                System.out.print("Kaldırmak istediğiniz uygulama numarasını giriniz: ");
-                                int chosenApp = scanner.nextInt();
-                                scanner.nextLine();
-                                Application application = applicationManager.getApps().values().stream().toList().get(chosenApp);
-                                applicationManager.remove(application);
+                                try {
+                                    applicationManager.list();
+                                    System.out.print("Kaldırmak istediğiniz uygulama numarasını giriniz: ");
+                                    int chosenApp = scanner.nextInt();
+                                    scanner.nextLine();
+                                    Application application = applicationManager.getApps().values().stream().toList().get(chosenApp);
+                                    applicationManager.remove(application);
+                                } catch (NotFoundApplicationException e) {
+                                    System.out.println(e.getMessage());
+                                }
+
                             }
                             case "7" -> {
                                 continue firstScreen;
@@ -353,8 +355,7 @@ public class PhoneManagementApplication {
                         }
                     }
                 }
-                case "2" ->
-                        System.out.println("Üzerinde çalışılıyor");/*{/*
+                case "2" -> System.out.println("Üzerinde çalışılıyor");/*{/*
                     System.out.println("1. Cihaz Seç\n2. Cihaz Ekle\n3. Kaldır");
                     System.out.print("Seçiminiz: ");
                     choice = scanner.next();
@@ -385,7 +386,7 @@ public class PhoneManagementApplication {
                     }
 
                 }*/
-                case "3"->{
+                case "3" -> {
                     break firstScreen;
                 }
             }
@@ -393,31 +394,25 @@ public class PhoneManagementApplication {
 
     }
 
-    public User defineOwnerInfo() {
-        System.out.println("Kullanıcı Bilgilerinizi Girer Misiniz");
-        System.out.print("Adınız: ");
-        String name = scanner.nextLine();
-        System.out.print("Soyadınız: ");
-        String surname = scanner.nextLine();
-        System.out.print("Telefon Numaranız: ");
-        String phoneNumber = scanner.nextLine();
-        System.out.print("Email Adresiniz: ");
-        String emailAddress = scanner.nextLine();
-        System.out.print("Cinsiyet(F/M): ");
-        String gender = scanner.nextLine();
+    public void defineOwnerInfo() {
 
-        return new User(name, surname, phoneNumber, emailAddress, gender);
+        System.out.println("Kullanıcı Bilgilerinizi Girer Misiniz");
+            System.out.print("İsim: ");
+            String name = scanner.next();
+            System.out.print("Soyisim: ");
+            String surname = scanner.next();
+            owner = new User(name, surname);
     }
 
     public Phone definePhoneInfo() {
         // Phone(String brand, String model, double storageSpace, OperatingSystem operatingSystem, User owner)
         System.out.println("Telefon bilgilerinizi girebilir misiniz");
         System.out.print("Brand: ");
-        String brand = scanner.nextLine();
+        String brand = scanner.next();
         System.out.print("Model: ");
-        String model = scanner.nextLine();
+        String model = scanner.next();
         System.out.print("Operating System(ios/android/other): ");
-        String operatingSystem = scanner.nextLine();
+        String operatingSystem = scanner.next();
         System.out.print("Storage Space(GB): ");
         double storageSpace = scanner.nextDouble();
 
