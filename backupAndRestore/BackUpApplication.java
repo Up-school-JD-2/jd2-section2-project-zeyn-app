@@ -1,11 +1,12 @@
 package backupAndRestore;
 
 import application.Application;
+import domain.Constant;
 
 import java.io.*;
 
 public class BackUpApplication {
-    private String dosyaAdi = "Application.txt";
+    private String dosyaAdi = Constant.APPLICATION_FILE;
     public BackUpApplication() {
         File file = new File(dosyaAdi);
         try {

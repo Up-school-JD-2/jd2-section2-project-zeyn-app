@@ -16,4 +16,9 @@ public class Connection extends Person {
         this.category = ConnectionCategory.valueOf(category.toUpperCase());
         this.id = idGenerator.generateID(this.category.name().toLowerCase());
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", category=" + category;
+    }
 }

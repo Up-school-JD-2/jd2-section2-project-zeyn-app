@@ -19,6 +19,10 @@ public abstract class A_ConnectionManager implements I_Manager<Connection>, I_Fu
         return connections;
     }
 
+    public void setConnections(Map<String, Connection> connections) {
+        this.connections = connections;
+    }
+
     public A_ConnectionManager() {
         connections = new HashMap<>();
     }

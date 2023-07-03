@@ -1,12 +1,13 @@
 package backupAndRestore;
 
 import connection.Connection;
+import domain.Constant;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class BackUpConnections {
-    private String dosyaAdi = "Connection.txt";
+    private String dosyaAdi = Constant.CONNECTION_FILE;
     public BackUpConnections() {
 
     }
